@@ -15,7 +15,7 @@ import java.util.List;
 @Controller
 @RequestMapping("")
 public class HomeControlador {
-    private PokemonRepositorio pokemonRepositorio;
+    private PokemonRepositorio pokemonRepositorio = new PokemonRepositorio();
 
     @GetMapping("")
     public ModelAndView verPaginaDeInicio() {
@@ -29,15 +29,12 @@ public class HomeControlador {
 
         for(int i=0; i<jsonArray.length(); i++) {
             jsonObject = new JSONObject(jsonArray.get(i).toString());
-            pokemonRepositorio.create(new Pokemon(jsonObject.get("url").toString()));
+            this.pokemonRepositorio.create(new Pokemon(jsonObject.get("url").toString()));
         }
 
         List<Pokemon> ListaPokemons = pokemonRepositorio.findAll();
         return new ModelAndView("index")
                 .addObject("ListaPokemons", ListaPokemons);
     }
-
-
-
 
 }

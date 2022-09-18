@@ -8,9 +8,12 @@ import java.util.List;
 public class PokemonRepositorio implements IPokemonRepositorio{
     private List<Pokemon> listaEventos = new ArrayList();
 
+    public PokemonRepositorio() {
+    }
     @Override
     public void create(Object pokemon) {
-        this.listaEventos.add((Pokemon)pokemon);
+        listaEventos.add((Pokemon)pokemon);
+        System.out.println("entre");
     }
 
     @Override

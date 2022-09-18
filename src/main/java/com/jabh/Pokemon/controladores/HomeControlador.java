@@ -2,7 +2,6 @@ package com.jabh.Pokemon.controladores;
 
 import com.jabh.Pokemon.modelos.Pokemon;
 import com.jabh.Pokemon.repositorios.PokemonRepositorio;
-import com.sun.tools.jconsole.JConsoleContext;
 import org.json.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +18,13 @@ public class HomeControlador {
 
     @GetMapping("")
     public ModelAndView verPaginaDeInicio() {
+        PoblarRepositorioPoquemon();
+        List<Pokemon> ListaPokemons = pokemonRepositorio.findAll();
+        return new ModelAndView("index.html")
+                .addObject("ListaPokemons", ListaPokemons);
+    }
 
+    private void PoblarRepositorioPoquemon(){
         String uri= "https://pokeapi.co/api/v2/pokemon-species";
         RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.getForObject(uri, String.class);
@@ -31,10 +36,5 @@ public class HomeControlador {
             jsonObject = new JSONObject(jsonArray.get(i).toString());
             this.pokemonRepositorio.create(new Pokemon(jsonObject.get("url").toString()));
         }
-
-        List<Pokemon> ListaPokemons = pokemonRepositorio.findAll();
-        return new ModelAndView("index")
-                .addObject("ListaPokemons", ListaPokemons);
     }
-
 }

@@ -3,6 +3,7 @@ package com.jabh.Pokemon.modelos;
 import org.json.*;
 import org.springframework.format.Parser;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 
@@ -17,8 +18,13 @@ public class Pokemon {
     private String cadenaEvolucion;
 
     //parseamos el json de pokemons para instanciar la clase
-    Pokemon(String jsonPokemon){
-        JSONObject jsonObject = new JSONObject(jsonPokemon);
+    public Pokemon(String url){
+        RestTemplate restTemplate = new RestTemplate();
+        String result = restTemplate.getForObject(url, String.class);
+        JSONObject jsonObject = new JSONObject(result);
+
+        JSONArray jsonArray = jsonObject.getJSONArray("color");
+        JSONObject jsonObjectTemp = new JSONObject(jsonArray);
 
     }
 

@@ -22,10 +22,10 @@ public class Pokemon {
         JSONObject jsonObject = new JSONObject(result);
 
         this.id = (Integer) (jsonObject.get("id"));
-        this.name = jsonObject.get("name").toString();
+        this.name = jsonObject.get("name").toString().toUpperCase();
         this.imagen = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+this.id+".png";
         this.color = jsonObject.getJSONObject("color").get("name").toString();
-        this.habitat = jsonObject.getJSONObject("habitat").get("name").toString();
+        this.habitat = jsonObject.get("habitat").toString() != "null" ? jsonObject.getJSONObject("habitat").get("name").toString() : "(Sin Datos)";
         this.cadenaEvolucion = jsonObject.getJSONObject("evolution_chain").get("url").toString();
 
         System.out.println(this.id);

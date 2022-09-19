@@ -1,76 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{master.html}">
 <head>
 	<meta charset="utf-8">
 	<title>Pokemon</title>
-	<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-			crossorigin="anonymous">
-
-	<link rel="stylesheet"
-		  href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
-	<link
-			href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
-			rel="stylesheet" />
-
-	<style>
-form .invalid-feedback {
-	display: block;
-}
-</style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-	<div class="container-fluid">
-		<a class="navbar-brand" href="/">Pokemons</a>
-		<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-	</div>
-</nav>
-
-<div layout:fragment="content" class="container my-5">
-</div>
-
-<script
-		src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-
-<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-		crossorigin="anonymous"></script>
-
-<script
-		src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-<script
-		src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-<div layout:fragment="scripts" th:remove="tag">
-
-</div>
-
-<div layout:fragment="content">
-	<div class="bg-light p-5 rounded">
-		<h1 class="display-1 text-success">Lista Pokemons</h1>
-		<h2>Lista de Pokemos usando PokeAPI</h2>
-	</div>
-	<div class="row">
-		<div class="col-md-3 my-5" th:each="pokemon : ${ListaPokemons}" th:object="${pokemon}">
-			<a th:href="@{/pokemon/{id}(id=*{id})}" class="card shadow-lg" style="text-decoration:none;">
-				<img th:src="@{{filename}(filename=*{imagen})}" class="card-img-top">
-				<div class="card-body">
-					<h2 class="card-title fs-6" th:text="*{name}"></h2>
+	<div layout:fragment="content">
+		<div class="bg-light p-5 rounded">
+			<h1 class="display-1 text-success">Lista Pokemons</h1>
+			<h2>Lista de Pokemos usando PokeAPI</h2>
+		</div>
+		<div class="row">
+			<div class="row">
+				<div class="col-md-4 my-4" th:each="pokemon : ${ListaPokemons}" th:object="${pokemon}">
+					<a th:href="@{/pokemon/{id}(id=*{id})}" class="card shadow-lg" style="text-decoration:none;">
+						<img th:src="@{{filename}(filename=*{imagen})}" class="card-img-top">
+						<div class="card-body">
+							<h2 class="card-title fs-6" th:text="*{name}"></h2>
+						</div>
+					</a>
 				</div>
-			</a>
+			</div>
+			<div class="row mt-5" th:with="page=${ListaPokemons}">
+				<div class="col-sm-6">
+					<div sd:pagination-sumary>
+					</div>
+					<div class="col-sm-6">
+						<nav>
+							<ul class="pagination" sd:pagination="full"></ul>
+						</nav>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-
-</div>
 </body>
 </html>

@@ -5,6 +5,7 @@ import com.jabh.Pokemon.repositorios.PokemonRepositorio;
 import org.json.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,17 +15,25 @@ import java.util.List;
 @Controller
 @RequestMapping("")
 public class HomeControlador {
-    private PokemonRepositorio pokemonRepositorio = new PokemonRepositorio();
+
+    private PokemonRepositorio pokemonRepositorio;
 
     @GetMapping("")
     public ModelAndView verPaginaDeInicio() {
-        PoblarRepositorioPoquemon();
+        PoblarRepositorioPokemon();
         List<Pokemon> ListaPokemons = pokemonRepositorio.findAll();
         return new ModelAndView("index.html")
                 .addObject("ListaPokemons", ListaPokemons);
     }
 
-    private void PoblarRepositorioPoquemon(){
+    @GetMapping("/pokemon/{id}")
+    public ModelAndView mostrarDetallesDePelicula(@PathVariable Integer id) {
+        Pokemon pokemon = new Pokemon("https://pokeapi.co/api/v2/pokemon-species/"+id);
+
+        return new ModelAndView("pokemon").addObject("pokemon",pokemon);
+    }
+    private void PoblarRepositorioPokemon(){
+        this.pokemonRepositorio = new PokemonRepositorio();
         String uri= "https://pokeapi.co/api/v2/pokemon-species";
         RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.getForObject(uri, String.class);

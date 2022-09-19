@@ -17,7 +17,7 @@ public class PokemonRepositorio implements IPokemonRepositorio{
     }
 
     @Override
-    public Object find(Object var1) {
+    public Object find(Object id) {
         return null;
     }
 

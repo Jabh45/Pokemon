@@ -14,7 +14,7 @@
 		</div>
 		<div class="row">
 			<div class="row">
-				<div class="col-md-4 my-4" th:each="pokemon : ${ListaPokemons}" th:object="${pokemon}">
+				<div class="col-md-3 my-4" th:each="pokemon : ${ListaPokemons}" th:object="${pokemon}">
 					<a th:href="@{/pokemon/{id}(id=*{id})}" class="card shadow-lg" style="text-decoration:none;">
 						<img th:src="@{{filename}(filename=*{imagen})}" class="card-img-top">
 						<div class="card-body">
@@ -23,16 +23,9 @@
 					</a>
 				</div>
 			</div>
-			<div class="row mt-5" th:with="page=${ListaPokemons}">
-				<div class="col-sm-6">
-					<div sd:pagination-sumary>
-					</div>
-					<div class="col-sm-6">
-						<nav>
-							<ul class="pagination" sd:pagination="full"></ul>
-						</nav>
-					</div>
-				</div>
+			<div class="text-end">
+				<a th:if="${Pagina>1}" class="btn btn-primary btn-lg" th:href="@{/{id}(id=*{Pagina-1})}">Anterior</a>
+				<a class="btn btn-success btn-lg" th:href="@{/{id}(id=*{Pagina+1})}">Siguiente</a>
 			</div>
 		</div>
 	</div>

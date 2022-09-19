@@ -24,7 +24,8 @@ public class HomeControlador {
         pokemonRepositorio = new PokemonRepositorio(1);
         List<Pokemon> ListaPokemons = pokemonRepositorio.findAll();
         return new ModelAndView("index.html")
-                .addObject("ListaPokemons", ListaPokemons);
+                .addObject("ListaPokemons", ListaPokemons)
+                .addObject("Pagina", 1);
     }
 
     @GetMapping("/{id}")
@@ -32,7 +33,8 @@ public class HomeControlador {
         pokemonRepositorio = new PokemonRepositorio(id);
         List<Pokemon> ListaPokemons = pokemonRepositorio.findAll();
         return new ModelAndView("index.html")
-                .addObject("ListaPokemons", ListaPokemons);
+                .addObject("ListaPokemons", ListaPokemons)
+                .addObject("Pagina", id);
     }
 
     @GetMapping("/pokemon/{id}")

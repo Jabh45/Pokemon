@@ -12,8 +12,8 @@ public class Pokemon {
     private String name;
     private String imagen;
     private String color;
-    private String habitat;
-    private int cadenaEvolucion;
+    private String habitat = "";
+    private int cadenaEvolucion = 0;
 
     //parseamos el json de pokemons para instanciar la clase
     public Pokemon(String url){
@@ -27,9 +27,11 @@ public class Pokemon {
         this.color = jsonObject.getJSONObject("color").get("name").toString();
         this.habitat = jsonObject.get("habitat").toString() != "null" ? jsonObject.getJSONObject("habitat").get("name").toString() : "(Sin Datos)";
 
-        String cadena = jsonObject.get("evolution_chain").toString() != "null" ? jsonObject.getJSONObject("evolution_chain").get("url").toString() : "(Sin cadena de Evoluciones)";
-        String[] parts = cadena.split("/");
-        this.cadenaEvolucion = Integer.parseInt(parts[parts.length-1]);
+        if( jsonObject.get("evolution_chain").toString() != "null"){
+            String cadena = jsonObject.getJSONObject("evolution_chain").get("url").toString();
+            String[] parts = cadena.split("/");
+            this.cadenaEvolucion = Integer.parseInt(parts[parts.length-1]);
+        }
 
         System.out.println(this.id);
         System.out.println(this.imagen);

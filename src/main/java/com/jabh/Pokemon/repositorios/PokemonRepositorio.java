@@ -10,9 +10,6 @@ import java.util.List;
 
 public class PokemonRepositorio implements IPokemonRepositorio{
     private List<Pokemon> listaPokemons;
-    private int cantidadAnterior;
-    private int cantidadActual;
-    private int cantidadSiguiente;
 
     public PokemonRepositorio(int id) {
         PoblarRepositorioPokemon(id);

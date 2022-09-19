@@ -8,8 +8,15 @@ public class Evoluciones {
     private List<Pokemon> cadenaEvoluciones;
 
     //parseamos el json para instanciar la clase
-    Evoluciones(String jsonCadenaEvoluciones){
-        JSONObject jsonObject = new JSONObject(jsonCadenaEvoluciones);
+    public Evoluciones(String url){
 
+    }
+
+    public List<Pokemon> getCadenaEvoluciones() {
+        return cadenaEvoluciones;
+    }
+
+    public void setCadenaEvoluciones(List<Pokemon> cadenaEvoluciones) {
+        this.cadenaEvoluciones = cadenaEvoluciones;
     }
 }

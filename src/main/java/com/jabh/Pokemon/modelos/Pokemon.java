@@ -26,7 +26,7 @@ public class Pokemon {
         this.imagen = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+this.id+".png";
         this.color = jsonObject.getJSONObject("color").get("name").toString();
         this.habitat = jsonObject.get("habitat").toString() != "null" ? jsonObject.getJSONObject("habitat").get("name").toString() : "(Sin Datos)";
-        this.cadenaEvolucion = jsonObject.getJSONObject("evolution_chain").get("url").toString();
+        this.cadenaEvolucion = jsonObject.get("evolution_chain").toString() != "null" ? jsonObject.getJSONObject("evolution_chain").get("url").toString() : "(Sin cadena de Evoluciones)";
 
         System.out.println(this.id);
         System.out.println(this.imagen);

@@ -1,5 +1,6 @@
 package com.jabh.Pokemon.controladores;
 
+import com.jabh.Pokemon.modelos.Evoluciones;
 import com.jabh.Pokemon.modelos.Pokemon;
 import com.jabh.Pokemon.repositorios.PokemonRepositorio;
 import org.json.*;
@@ -20,23 +21,39 @@ public class HomeControlador {
 
     @GetMapping("")
     public ModelAndView verPaginaDeInicio() {
-        PoblarRepositorioPokemon();
+        PoblarRepositorioPokemon(0);
+        List<Pokemon> ListaPokemons = pokemonRepositorio.findAll();
+        return new ModelAndView("index.html")
+                .addObject("ListaPokemons", ListaPokemons);
+    }
+
+    @GetMapping("/{id}")
+    public ModelAndView mostrarPokemons(@PathVariable Integer id) {
+        PoblarRepositorioPokemon(calcularCompensacion(id));
         List<Pokemon> ListaPokemons = pokemonRepositorio.findAll();
         return new ModelAndView("index.html")
                 .addObject("ListaPokemons", ListaPokemons);
     }
 
     @GetMapping("/pokemon/{id}")
-    public ModelAndView mostrarDetallesDePelicula(@PathVariable Integer id) {
+    public ModelAndView mostrarDetallesDePokemos(@PathVariable Integer id) {
         Pokemon pokemon = new Pokemon("https://pokeapi.co/api/v2/pokemon-species/"+id);
 
         return new ModelAndView("pokemon").addObject("pokemon",pokemon);
     }
-    private void PoblarRepositorioPokemon(){
+
+    @GetMapping("/evoluciones/{url}")
+    public ModelAndView mostrarDetallesDeEvoluciones(@PathVariable String url) {
+        List<Pokemon> evoluciones = new Evoluciones(url).getCadenaEvoluciones();
+
+        return new ModelAndView("evoluciones").addObject("evoluciones", evoluciones);
+    }
+
+    private void PoblarRepositorioPokemon(int compensacion){
         this.pokemonRepositorio = new PokemonRepositorio();
-        String uri= "https://pokeapi.co/api/v2/pokemon-species";
+        String url= "https://pokeapi.co/api/v2/pokemon-species"+"?offset="+compensacion+"&limit=20";
         RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject(uri, String.class);
+        String result = restTemplate.getForObject(url, String.class);
         JSONObject jsonObject = new JSONObject(result);
 
         JSONArray jsonArray = jsonObject.getJSONArray("results");
@@ -46,4 +63,9 @@ public class HomeControlador {
             this.pokemonRepositorio.create(new Pokemon(jsonObject.get("url").toString()));
         }
     }
+
+    private int calcularCompensacion(Integer id) {
+        return (id-1)*20;
+    }
+
 }

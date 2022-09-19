@@ -9,8 +9,8 @@
 <body>
 
 <div layout:fragment="content" th:object="${pokemon}">
-    <div class="row">
-        <div class="col-md-6">
+    <div class="row shadow-lg">
+        <div class="col-md-6 card shadow-lg">
             <img th:src="@{{filename}(filename=*{imagen})}"
                  th:alt="*{name}" class="img-fluid rounded w-100">
         </div>
@@ -25,12 +25,12 @@
                 <h4>Habitat :</h4>
                 <p th:text="*{habitat}"></p>
             </div>
-
+            <div class="text-end">
+                <a class="btn btn-primary btn-lg " th:href="@{/evoluciones/{id}(id=*{cadenaEvolucion})}">Cadena de Evoluciones</a>
+            </div>
         </div>
     </div>
-    <div class="text-end">
-        <a class="btn btn-primary btn-lg" th:href="@{/evoluciones/{id}(id=*{cadenaEvolucion})}">Cadena de Evoluciones</a>
-    </div>
+
 </div>
 
 

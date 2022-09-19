@@ -17,8 +17,9 @@
 				<div class="col-md-3 my-4" th:each="pokemon : ${ListaPokemons}" th:object="${pokemon}">
 					<a th:href="@{/pokemon/{id}(id=*{id})}" class="card shadow-lg" style="text-decoration:none;">
 						<img th:src="@{{filename}(filename=*{imagen})}" class="card-img-top">
-						<div class="card-body">
+						<div class="card-body text-center">
 							<h2 class="card-title fs-6" th:text="*{name}"></h2>
+							<p th:text="*{id}" class="text-muted small"></p>
 						</div>
 					</a>
 				</div>

@@ -32,13 +32,6 @@ public class Pokemon {
             String[] parts = cadena.split("/");
             this.cadenaEvolucion = Integer.parseInt(parts[parts.length-1]);
         }
-
-        System.out.println(this.id);
-        System.out.println(this.imagen);
-        System.out.println(this.name);
-        System.out.println(this.color);
-        System.out.println(this.habitat);
-        System.out.println(this.cadenaEvolucion);
     }
 
     public Integer getId() {

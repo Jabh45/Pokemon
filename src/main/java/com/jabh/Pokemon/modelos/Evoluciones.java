@@ -41,8 +41,6 @@ public class Evoluciones {
             jsonObject = new JSONObject(cadena.get(i).toString());
             cadenaEvoluciones.add(new Pokemon(jsonObject.getJSONObject("species").get("url").toString()));
             GenerarCadenaEvoluciones(jsonObject.getJSONArray("evolves_to"));
-            System.out.println("entre");
-
         }
     }
 }

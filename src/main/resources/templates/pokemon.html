@@ -25,8 +25,8 @@
                 <h4>Habitat :</h4>
                 <p th:text="*{habitat}"></p>
             </div>
-            <div class="text-end">
-                <a class="btn btn-primary btn-lg " th:href="@{/evoluciones/{id}(id=*{cadenaEvolucion})}">Cadena de Evoluciones</a>
+            <div th:if="*{cadenaEvolucion>0}" class="text-end">
+                <a  class="btn btn-primary btn-lg " th:href="@{/evoluciones/{id}(id=*{cadenaEvolucion})}">Cadena de Evoluciones</a>
             </div>
         </div>
     </div>

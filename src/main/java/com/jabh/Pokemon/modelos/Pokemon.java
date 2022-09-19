@@ -13,7 +13,7 @@ public class Pokemon {
     private String imagen;
     private String color;
     private String habitat;
-    private String cadenaEvolucion;
+    private int cadenaEvolucion;
 
     //parseamos el json de pokemons para instanciar la clase
     public Pokemon(String url){
@@ -26,7 +26,10 @@ public class Pokemon {
         this.imagen = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+this.id+".png";
         this.color = jsonObject.getJSONObject("color").get("name").toString();
         this.habitat = jsonObject.get("habitat").toString() != "null" ? jsonObject.getJSONObject("habitat").get("name").toString() : "(Sin Datos)";
-        this.cadenaEvolucion = jsonObject.get("evolution_chain").toString() != "null" ? jsonObject.getJSONObject("evolution_chain").get("url").toString() : "(Sin cadena de Evoluciones)";
+
+        String cadena = jsonObject.get("evolution_chain").toString() != "null" ? jsonObject.getJSONObject("evolution_chain").get("url").toString() : "(Sin cadena de Evoluciones)";
+        String[] parts = cadena.split("/");
+        this.cadenaEvolucion = Integer.parseInt(parts[parts.length-1]);
 
         System.out.println(this.id);
         System.out.println(this.imagen);
@@ -76,11 +79,11 @@ public class Pokemon {
         this.habitat = habitat;
     }
 
-    public String getCadenaEvolucion() {
+    public int getCadenaEvolucion() {
         return cadenaEvolucion;
     }
 
-    public void setCadenaEvolucion(String cadenaEvolucion) {
+    public void setCadenaEvolucion(int cadenaEvolucion) {
         this.cadenaEvolucion = cadenaEvolucion;
     }
 }

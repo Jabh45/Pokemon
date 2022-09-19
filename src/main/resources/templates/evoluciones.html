@@ -9,11 +9,11 @@
 <body>
 	<div layout:fragment="content">
 		<div class="bg-light p-5 rounded">
-			<h1 class="display-1 text-success">Cadena de Evoluciones</h1>
+			<h2 class="display-1 text-success">Cadena de Evoluciones</h2>
 		</div>
 		<div class="row">
 			<div class="row">
-				<div class="col-md-4 my-4" th:each="pokemon : ${cadenaEvoluciones}" th:object="${pokemon}">
+				<div class="col-md-4 my-4" th:each="pokemon : ${listaEvoluciones}" th:object="${pokemon}">
 					<a th:href="@{/pokemon/{id}(id=*{id})}" class="card shadow-lg" style="text-decoration:none;">
 						<img th:src="@{{filename}(filename=*{imagen})}" class="card-img-top">
 						<div class="card-body">

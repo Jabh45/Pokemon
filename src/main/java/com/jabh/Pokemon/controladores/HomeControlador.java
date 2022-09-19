@@ -21,7 +21,7 @@ public class HomeControlador {
 
     @GetMapping("")
     public ModelAndView verPaginaDeInicio() {
-        PoblarRepositorioPokemon(0);
+        pokemonRepositorio = new PokemonRepositorio(1);
         List<Pokemon> ListaPokemons = pokemonRepositorio.findAll();
         return new ModelAndView("index.html")
                 .addObject("ListaPokemons", ListaPokemons);
@@ -29,7 +29,7 @@ public class HomeControlador {
 
     @GetMapping("/{id}")
     public ModelAndView mostrarPokemons(@PathVariable Integer id) {
-        PoblarRepositorioPokemon(calcularCompensacion(id));
+        pokemonRepositorio = new PokemonRepositorio(id);
         List<Pokemon> ListaPokemons = pokemonRepositorio.findAll();
         return new ModelAndView("index.html")
                 .addObject("ListaPokemons", ListaPokemons);
@@ -42,30 +42,14 @@ public class HomeControlador {
         return new ModelAndView("pokemon").addObject("pokemon",pokemon);
     }
 
-    @GetMapping("/evoluciones/{url}")
-    public ModelAndView mostrarDetallesDeEvoluciones(@PathVariable String url) {
-        List<Pokemon> evoluciones = new Evoluciones(url).getCadenaEvoluciones();
+    @GetMapping("/evoluciones/{id}")
+    public ModelAndView mostrarDetallesDeEvoluciones(@PathVariable Integer id) {
+        Evoluciones evoluciones = new Evoluciones(id);
+        List<Pokemon> listaEvoluciones = evoluciones.getCadenaEvoluciones();
 
-        return new ModelAndView("evoluciones").addObject("evoluciones", evoluciones);
+        return new ModelAndView("evoluciones").addObject("listaEvoluciones", listaEvoluciones);
     }
 
-    private void PoblarRepositorioPokemon(int compensacion){
-        this.pokemonRepositorio = new PokemonRepositorio();
-        String url= "https://pokeapi.co/api/v2/pokemon-species"+"?offset="+compensacion+"&limit=20";
-        RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject(url, String.class);
-        JSONObject jsonObject = new JSONObject(result);
 
-        JSONArray jsonArray = jsonObject.getJSONArray("results");
-
-        for(int i=0; i<jsonArray.length(); i++) {
-            jsonObject = new JSONObject(jsonArray.get(i).toString());
-            this.pokemonRepositorio.create(new Pokemon(jsonObject.get("url").toString()));
-        }
-    }
-
-    private int calcularCompensacion(Integer id) {
-        return (id-1)*20;
-    }
 
 }
